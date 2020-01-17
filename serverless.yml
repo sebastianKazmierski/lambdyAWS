@@ -23,6 +23,7 @@ service: wylosowani2
 provider:
   name: aws
   runtime: java8
+  role: arn:aws:iam::674972054367:role/getUsersFromCognito
 
 # you can overwrite defaults here
 #  stage: dev
@@ -55,7 +56,6 @@ package:
 functions:
   listCandidates:
     handler: com.serverless.cognito.ListCandidates
-    Policies: AmazonCognitoReadOnly
     events:
       - http:
           method: get

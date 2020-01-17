@@ -31,7 +31,7 @@ public class ListCandidates implements RequestHandler<Map<String, Object>, ApiGa
             attributeToGet.add("name");
             listUsersRequest.setAttributesToGet(attributeToGet);
 
-          //  listUsersRequest.setFilter("name ^= \"Candidate\"");
+            listUsersRequest.setFilter("name ^= \"Candidate\"");
 
             ListUsersResult listUsersResult = cognitoClient.listUsers(listUsersRequest);
 
