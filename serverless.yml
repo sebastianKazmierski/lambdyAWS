@@ -22,7 +22,10 @@ service: wylosowani2
 
 provider:
   name: aws
-  runtime: java8
+  runtime: java11
+  authorizer:
+    type: COGNITO_USER_POOLS
+    authorizerId: 7bvxgi
 
 
 # you can overwrite defaults here
@@ -62,14 +65,31 @@ functions:
           method: get
           path: candidates
           cors: true
+    authorizer:
+      type: COGNITO_USER_POOLS
+      authorizerId: 7bvxgi
   deleteUser:
     handler: com.serverless.cognito.DeleteUser
     role: arn:aws:iam::674972054367:role/amazonCognitoPowerUser
     events:
       - http:
-          method: post
+          method: delete
           path: deleteuser/{username}
           cors: true
+    authorizer:
+      type: COGNITO_USER_POOLS
+      authorizerId: 7bvxgi
+  createUser:
+    handler: com.serverless.cognito.CreateUser
+    role: arn:aws:iam::674972054367:role/amazonCognitoPowerUser
+    events:
+      - http:
+          method: post
+          path: createUser
+          cors: true
+    authorizer:
+      type: COGNITO_USER_POOLS
+      authorizerId: 7bvxgi
 #  hello:
 #    handler: com.serverless.Handler
 #    The following are a few example events you can configure
