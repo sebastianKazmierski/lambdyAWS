@@ -22,7 +22,7 @@ service: wylosowani2
 
 provider:
   name: aws
-  runtime: java8
+  runtime: java11
 
 # you can overwrite defaults here
 #  stage: dev
@@ -50,16 +50,32 @@ provider:
 
 # you can add packaging information here
 package:
-  artifact: target/hello-dev.jar
+  artifact: target/wylosowani-dev.jar
 
 functions:
   listCandidates:
     handler: com.serverless.cognito.ListCandidates
-    Policies: AmazonCognitoReadOnly
+    role: arn:aws:iam::674972054367:role/getUsersFromCognito
     events:
       - http:
           method: get
           path: candidates
+          cors: true
+  deleteUser:
+    handler: com.serverless.cognito.DeleteUser
+    role: arn:aws:iam::674972054367:role/amazonCognitoPowerUser
+    events:
+      - http:
+          method: delete
+          path: deleteuser/{username}
+          cors: true
+  createUser:
+    handler: com.serverless.cognito.CreateUser
+    role: arn:aws:iam::674972054367:role/amazonCognitoPowerUser
+    events:
+      - http:
+          method: post
+          path: createUser
           cors: true
 #  hello:
 #    handler: com.serverless.Handler
